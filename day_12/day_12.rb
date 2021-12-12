@@ -6,27 +6,20 @@
 	h[to] << from
 end
 
-@paths = 0
+def explore(cave, small_visited, small_twice)
+	return 1 if cave == 'end'
 
-def explore(cave, small_visited, small_twice, path)
-	path = "#{path}-#{cave}"
-
-	if cave == 'end'
-		@paths += 1
-		return
-	end
 	small_twice = true if small_visited.include?(cave)
 	small_visited << cave if cave.downcase == cave
 
   options = @cave_paths[cave] || []
 	options -= small_visited if small_twice
 
-	options.each do |cave_option|
+	options.collect do |cave_option|
 		next if cave_option == 'start'
-		explore(cave_option, small_visited.dup, small_twice, path)
-	end
+		explore(cave_option, small_visited.dup, small_twice)
+	end.compact.sum
 end
 
-explore('start', [], false, '')
-
-puts @paths
+puts "Paths with single small visits: " + explore('start', [], true).to_s
+puts "Paths with single double small visit: " + explore('start', [], false).to_s
