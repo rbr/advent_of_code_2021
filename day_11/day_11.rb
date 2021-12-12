@@ -25,15 +25,18 @@ end
 
 500.times do |i|
   @cavern.each_with_index do |row, y|
-    row.each_with_index do |height, x|
+    row.each_with_index do |_, x|
       trigger(y, x)
     end
   end
 
-  puts "All flash @ step #{i+1}" if @cavern.flatten.all? { |octo| octo > 9 }
+  if @cavern.flatten.all? { |octo| octo > 9 }
+    puts "All flash @ step #{i+1}"
+    exit
+  end
 
   @cavern.each_with_index do |row, y|
-    row.each_with_index do |height, x|
+    row.each_with_index do |_, x|
       @cavern[y][x] = 0 if @cavern[y][x] > 9
     end
   end
