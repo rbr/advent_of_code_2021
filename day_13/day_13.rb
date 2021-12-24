@@ -8,10 +8,10 @@ IO.readlines("input").each do |input_line|
 	end
 end
 
-GRID_HEIGHT = dots.max_by { |x, y| y }[1] + 1
-GRID_WIDTH = dots.max_by { |x, y| x }[0] + 1
+GRID_HEIGHT = dots.max_by { |x, y| y }[1]
+GRID_WIDTH = dots.max_by { |x, y| x }[0]
 
-@grid = Array.new(GRID_HEIGHT) { Array.new(GRID_WIDTH) }
+@grid = Array.new(GRID_HEIGHT + 1) { Array.new(GRID_WIDTH + 1) }
 dots.each { |x, y| @grid[y][x] = 1 }
 
 def print_grid(max_x, max_y)
@@ -32,7 +32,7 @@ folds.each_with_index do |fold, i|
 	if axis == 'y'
 		@grid[line].each { |x| x = nil }
 
-		((line+1)..(GRID_HEIGHT-1)).each do |y|
+		((line+1)..GRID_HEIGHT).each do |y|
 			@grid[y].each_with_index do |_, x|
 				to_y = line - (y - line)
 				next if @grid[y][x].nil?
@@ -44,8 +44,8 @@ folds.each_with_index do |fold, i|
 	else
 		@grid.each { |row| row[line] = nil }
 
-		((line+1)..(GRID_WIDTH-1)).each do |x|
-			(0..(GRID_HEIGHT-1)).each do |y|
+		((line+1)..GRID_WIDTH).each do |x|
+			(0..GRID_HEIGHT).each do |y|
 				to_x = line - (x - line)
 				next if @grid[y][x].nil?
 
