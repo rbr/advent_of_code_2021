@@ -35,4 +35,4 @@ scores =
     end
   end
 
-puts "Middle cmpletion score: " + scores.sort[scores.size/2].to_s
+puts "Middle completion score: " + scores.sort[scores.size/2].to_s
